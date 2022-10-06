@@ -1,6 +1,7 @@
 {
   "name": "@lyra/app",
   "version": "0.0.1",
+  "homepage": "https://0xgreendog.github.io/lyra-interface/",
   "private": true,
   "scripts": {
     "dev": "yarn sdk:build && concurrently \"yarn sdk:dev\" \"next dev\"",
