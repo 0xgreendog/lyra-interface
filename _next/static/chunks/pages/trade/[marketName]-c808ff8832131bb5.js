@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7200],{16001:function(n,_,u){(window.__NEXT_P=window.__NEXT_P||[]).push(["/trade/[marketName]",function(){return u(65911)}])}},function(n){n.O(0,[5106,3310,1704,8221,7037,3747,5885,2804,11,2046,9911,618,9638,4920,5899,6129,1615,4398,81,9774,2888,179],(function(){return _=16001,n(n.s=_);var _}));var _=n.O();_N_E=_}]);

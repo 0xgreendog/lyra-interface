@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Fadmin\u002F[marketName]","\u002Ftrade\u002F[marketName]","\u002Fvaults\u002F[marketName]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
