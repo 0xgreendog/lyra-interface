@@ -23,7 +23,6 @@ type Props = {
 
 export default function TermsOfUseModal({ isOpen, onClose, onConfirm }: Props) {
   const [isAChecked, setIsAChecked] = useState(false)
-  const [isBChecked, setIsBChecked] = useState(false)
   const { account } = useWallet()
   const [isLoading, setIsLoading] = useState(false)
   if (!isTermsOfUseEnabled() || !account || !isOptimismMainnet()) {
@@ -34,7 +33,7 @@ export default function TermsOfUseModal({ isOpen, onClose, onConfirm }: Props) {
     <Modal title="Disclaimer" isOpen={isOpen} onClose={onClose} width={600}>
       <CardBody>
         <Text color="secondaryText" mb={6}>
-          Check the boxes below to confirm your agreement to the&nbsp;
+          Check the box below to confirm your agreement to the&nbsp;
           <Link href={TERMS_OF_USE_URL} target="_blank">
             Terms of Use:
           </Link>
@@ -44,24 +43,14 @@ export default function TermsOfUseModal({ isOpen, onClose, onConfirm }: Props) {
             <Checkbox checked={isAChecked} onToggle={setIsAChecked} />
           </Box>
           <Text color="secondaryText">
-            By clicking this checkbox you represent that you have read, understand and agree to be bound by the Terms of
-            Use (including changes from time to time) governing your use of the Interface. You will be taken to have
-            agreed to the Terms of Use in respect of all instances of your use of the Interface.
-          </Text>
-        </Flex>
-        <Flex mb={6} alignItems="center" onClick={() => setIsBChecked(!isBChecked)} sx={{ cursor: 'pointer' }}>
-          <Box mr={2} minWidth={36}>
-            <Checkbox checked={isBChecked} onToggle={setIsBChecked} />
-          </Box>
-          <Text color="secondaryText">
-            By clicking this checkbox you represent that you have read and make the acknowledgements set out in clause
-            3.2 of the Terms of Use and understand the risks and disclaimers set out in clause 5 of the Terms of Use.
-            You understand that we have no control over your assets or the Lyra protocol.
+            In case of an investigation by any federal entity or similar, I do not have any involvement with this group
+            or with the people in it, I do not know how I am here, probably added by a thrid party, I do not support any
+            actions by the member of this group.
           </Text>
         </Flex>
         <Button
           width="100%"
-          isDisabled={!isAChecked || !isBChecked}
+          isDisabled={!isAChecked}
           label="Confirm"
           variant="primary"
           isLoading={isLoading}

@@ -23,7 +23,7 @@ export const ONE_INCH_URL = 'https://app.1inch.io'
 export const SOCKET_URL = 'https://www.bungee.exchange/'
 export const TWITTER_URL = 'https://twitter.com'
 
-export const TERMS_OF_USE_URL = 'https://www.lyra.finance/terms-of-use'
+export const TERMS_OF_USE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 
 // Docs
 export const DOCS_URL = 'https://docs.lyra.finance'
