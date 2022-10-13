@@ -75,7 +75,6 @@ export type PositionFilter = {
   minOpenTimestamp?: number
   maxCloseTimestamp?: number
   minPositionIds?: Record<string, number>
-  maxPositionIds?: Record<string, number>
 }
 
 export enum PositionLeaderboardSortBy {
@@ -89,6 +88,7 @@ export enum PositionLeaderboardSortBy {
 
 export type PositionLeaderboardFilter = {
   minTotalPremiums?: BigNumber
+  minTotalLongPremiums?: BigNumber
   sortBy?: PositionLeaderboardSortBy
   secondarySortBy?: PositionLeaderboardSortBy
 } & PositionFilter
@@ -102,6 +102,7 @@ export type PositionLeaderboard = {
   unrealizedLongPnl: BigNumber
   unrealizedLongPnlPercentage: BigNumber
   totalPremiums: BigNumber
+  totalLongPremiums: BigNumber
   totalNotionalVolume: BigNumber
   positions: Position[]
 }

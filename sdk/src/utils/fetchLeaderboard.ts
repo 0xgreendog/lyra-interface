@@ -26,6 +26,7 @@ export default async function fetchLeaderboard(
 ): Promise<PositionLeaderboard[]> {
   const positions = await lyra.allPositions(options)
   const minTotalPremiums = options?.minTotalPremiums
+  const minTotalLongPremiums = options?.minTotalLongPremiums
 
   const positionByWallet: Record<string, Position[]> = positions.reduce(
     (dict: Record<string, Position[]>, position) => {
@@ -47,40 +48,47 @@ export default async function fetchLeaderboard(
       let totalLongAverageOpenCost = ZERO_BN
       let totalNotionalVolume = ZERO_BN
       let totalPremiums = ZERO_BN
+      let totalLongPremiums = ZERO_BN
 
-      positions.forEach(position => {
-        const { isLong, isSettled } = position
-        const { realizedPnl, settlementPnl, unrealizedPnl, totalAverageCloseCost, totalAverageOpenCost } =
-          position.pnl()
-        accountRealizedPnl = accountRealizedPnl.add(realizedPnl).add(settlementPnl)
-        accountUnrealizedPnl = accountUnrealizedPnl.add(unrealizedPnl)
-        if (isLong) {
-          accountRealizedLongPnl = accountRealizedLongPnl.add(realizedPnl).add(settlementPnl)
-          accountUnrealizedLongPnl = accountUnrealizedLongPnl.add(unrealizedPnl)
-          totalLongAverageCloseOrSettleCost = totalLongAverageCloseOrSettleCost.add(totalAverageCloseCost)
-          if (isSettled) {
-            // Include avg open cost on settled positions
-            totalLongAverageCloseOrSettleCost = totalLongAverageCloseOrSettleCost.add(totalAverageOpenCost)
-          } else {
-            // Ignore avg open cost on settled positions
-            totalLongAverageOpenCost = totalLongAverageOpenCost.add(totalAverageOpenCost)
+      positions
+        // Ignore transferred positions in P&L calcs
+        .filter(p => p.transfers().length === 0)
+        .forEach(position => {
+          const { isLong, isSettled } = position
+          const { realizedPnl, settlementPnl, unrealizedPnl, totalAverageCloseCost, totalAverageOpenCost } =
+            position.pnl()
+          accountRealizedPnl = accountRealizedPnl.add(realizedPnl).add(settlementPnl)
+          accountUnrealizedPnl = accountUnrealizedPnl.add(unrealizedPnl)
+          if (isLong) {
+            accountRealizedLongPnl = accountRealizedLongPnl.add(realizedPnl).add(settlementPnl)
+            accountUnrealizedLongPnl = accountUnrealizedLongPnl.add(unrealizedPnl)
+            totalLongAverageCloseOrSettleCost = totalLongAverageCloseOrSettleCost.add(totalAverageCloseCost)
+            if (isSettled) {
+              // Include avg open cost on settled positions
+              totalLongAverageCloseOrSettleCost = totalLongAverageCloseOrSettleCost.add(totalAverageOpenCost)
+            } else {
+              // Ignore avg open cost on settled positions
+              totalLongAverageOpenCost = totalLongAverageOpenCost.add(totalAverageOpenCost)
+            }
+            totalLongPremiums = totalLongPremiums.add(
+              position.trades().reduce((sum, trade) => sum.add(trade.premium), ZERO_BN)
+            )
           }
-        }
-        totalNotionalVolume = totalNotionalVolume.add(
-          position.trades().reduce((sum, trade) => {
-            const volume = trade.strikePrice.mul(trade.size).div(UNIT)
-            return sum.add(volume)
-          }, ZERO_BN)
-        )
-        totalPremiums = totalPremiums.add(position.trades().reduce((sum, trade) => sum.add(trade.premium), ZERO_BN))
-      })
+          totalNotionalVolume = totalNotionalVolume.add(
+            position.trades().reduce((sum, trade) => {
+              const volume = trade.strikePrice.mul(trade.size).div(UNIT)
+              return sum.add(volume)
+            }, ZERO_BN)
+          )
+          totalPremiums = totalPremiums.add(position.trades().reduce((sum, trade) => sum.add(trade.premium), ZERO_BN))
+        })
 
       const realizedLongPnlPercentage = totalLongAverageCloseOrSettleCost.gt(0)
-        ? accountRealizedPnl.mul(UNIT).div(totalLongAverageCloseOrSettleCost)
+        ? accountRealizedLongPnl.mul(UNIT).div(totalLongAverageCloseOrSettleCost)
         : ZERO_BN
 
       const unrealizedLongPnlPercentage = totalLongAverageOpenCost.gt(0)
-        ? accountUnrealizedPnl.mul(UNIT).div(totalLongAverageOpenCost)
+        ? accountUnrealizedLongPnl.mul(UNIT).div(totalLongAverageOpenCost)
         : ZERO_BN
 
       return {
@@ -92,12 +100,16 @@ export default async function fetchLeaderboard(
         unrealizedLongPnl: accountUnrealizedLongPnl,
         unrealizedLongPnlPercentage,
         totalPremiums,
+        totalLongPremiums,
         totalNotionalVolume,
         positions,
       }
     })
     .filter(user => {
       if (minTotalPremiums && user.totalPremiums.lt(minTotalPremiums)) {
+        return false
+      }
+      if (minTotalLongPremiums && user.totalLongPremiums.lt(minTotalLongPremiums)) {
         return false
       }
       return true

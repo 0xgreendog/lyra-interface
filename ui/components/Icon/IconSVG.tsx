@@ -37,6 +37,7 @@ import {
   FileText,
   Flag,
   Gift,
+  GitCommit,
   GitHub,
   HelpCircle,
   Hexagon,
@@ -72,6 +73,7 @@ import {
   Zap,
 } from 'react-feather'
 
+import CandleIcon from './CandleIcon'
 import DiscordIcon from './DiscordIcon'
 import DotIcon from './DotIcon'
 import EthereumIcon from './EthereumIcon'
@@ -169,6 +171,8 @@ export enum IconType {
   Share2 = 'Share2',
   Refresh = 'RefreshCcw',
   Link2 = 'Link2',
+  Candle = 'Candle',
+  GitCommit = 'GitCommit',
 }
 
 export type CustomIconProps = {
@@ -215,6 +219,8 @@ const getLocalIcon = (icon: IconType) => {
       return FlagIcon
     case IconType.Rewards:
       return RewardsIcon
+    case IconType.Candle:
+      return CandleIcon
     default:
       return null
   }
@@ -354,6 +360,8 @@ const getFeatherIcon = (icon: IconType) => {
       return Share2
     case IconType.Link2:
       return Link2
+    case IconType.GitCommit:
+      return GitCommit
     default:
       return null
   }
