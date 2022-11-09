@@ -12,6 +12,7 @@ import { publicProvider } from 'wagmi/providers/public'
 
 import Avatar from '../components/common/Avatar'
 import { ScreenWalletData } from '../constants/screen'
+import useQueryParam from '../hooks/url/useQueryParam'
 import useAutoConnect from '../hooks/wallet/useAutoConnect'
 import useWallet from '../hooks/wallet/useWallet'
 import NoSSR from '../page_helpers/common/NoSSR'
@@ -20,7 +21,7 @@ import isOptimismMainnet from '../utils/isOptimismMainnet'
 import isScreeningEnabled from '../utils/isScreeningEnabled'
 import mergeDeep from '../utils/mergeDeep'
 
-const SUPPORTED_CHAINS = [wagmiChain.optimism, wagmiChain.optimismKovan]
+const SUPPORTED_CHAINS = [wagmiChain.optimism, wagmiChain.optimismGoerli]
 
 const INFURA_PROJECT_ID = nullthrows(
   process.env.NEXT_PUBLIC_INFURA_PROJECT_ID,
@@ -53,21 +54,23 @@ const wagmiClient = createClient({
 })
 
 const WalletScreenModal = (): JSX.Element => {
-  const { account, disconnect } = useWallet()
+  const { connectedAccount, disconnect } = useWallet()
+  const [_, setSeeAddress] = useQueryParam('see')
+
   const [blockData, setBlockData] = useState<ScreenWalletData | null>(null)
 
   useAutoConnect()
-  const prevAccountRef = useRef(account)
+  const prevAccountRef = useRef(connectedAccount)
 
   useEffect(() => {
-    if (account && isOptimismMainnet() && isScreeningEnabled()) {
-      const isConnect = !prevAccountRef.current || prevAccountRef.current !== account
-      fetchScreenWallet(account, isConnect).then(setBlockData)
+    if (connectedAccount && isOptimismMainnet() && isScreeningEnabled()) {
+      const isConnect = !prevAccountRef.current || prevAccountRef.current !== connectedAccount
+      fetchScreenWallet(connectedAccount, isConnect).then(setBlockData)
     } else {
       setBlockData(null)
     }
-    prevAccountRef.current = account
-  }, [account])
+    prevAccountRef.current = connectedAccount
+  }, [connectedAccount])
 
   return (
     <>
@@ -143,7 +146,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }): JSX
     },
   })
 
-  const initialChain = isOptimismMainnet() ? wagmiChain.optimism : wagmiChain.optimismKovan
+  const initialChain = isOptimismMainnet() ? wagmiChain.optimism : wagmiChain.optimismGoerli
 
   return (
     <WagmiConfig client={wagmiClient}>

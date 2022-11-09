@@ -1,3 +1,4 @@
+import Box from '@lyra/ui/components/Box'
 import Card from '@lyra/ui/components/Card'
 import CardBody from '@lyra/ui/components/Card/CardBody'
 import CardSection from '@lyra/ui/components/Card/CardSection'
@@ -38,17 +39,13 @@ const RewardsHistoryCard = withSuspense(
         {epochs.map((accountRewardEpoch, idx) => {
           const epochNumber = accountRewardEpochs.length - idx
           return (
-            <>
+            <Box key={epochNumber}>
               {idx > 0 ? <CardSeparator /> : null}
-              <RewardsHistoryCardSection
-                key={epochNumber}
-                epochNumber={epochNumber}
-                accountRewardEpoch={accountRewardEpoch}
-              />
-            </>
+              <RewardsHistoryCardSection epochNumber={epochNumber} accountRewardEpoch={accountRewardEpoch} />
+            </Box>
           )
         })}
-        {!showAll && epochs.length > REWARDS_HISTORY_DEFAULT_EPOCH_LIMIT ? (
+        {!showAll && epochs.length >= REWARDS_HISTORY_DEFAULT_EPOCH_LIMIT ? (
           <CardSection
             onClick={() => setShowAll(true)}
             sx={{

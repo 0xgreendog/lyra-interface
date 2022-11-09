@@ -15,6 +15,7 @@ import useLocalStorage from '@/app/hooks/local_storage/useLocalStorage'
 import useIsReady from '@/app/hooks/wallet/useIsReady'
 import useScreenTransaction from '@/app/hooks/wallet/useScreenTransaction'
 import useWallet from '@/app/hooks/wallet/useWallet'
+import isScreeningEnabled from '@/app/utils/isScreeningEnabled'
 import isTermsOfUseEnabled from '@/app/utils/isTermsOfUseEnabled'
 
 import ConnectWalletButton from '../ConnectWalletButton'
@@ -37,29 +38,32 @@ const TransactionButton = withSuspense(
       const isTermsAccepted = account && !!termsDict[account]
       const [isTermsOpen, setIsTermsOpen] = useState(false)
       const screenData = useScreenTransaction(transactionType)
-
       const isReady = useIsReady()
 
       return (
         <Box sx={sx}>
-          {screenData.isBlocked ? (
+          {isScreeningEnabled() && (!screenData || screenData.isBlocked) ? (
             <Alert
               variant="error"
               mb={3}
               description={
-                <>
-                  {screenData.blockDescription ?? ''}&nbsp; Learn more in our{' '}
-                  <Link
-                    textVariant="small"
-                    color="errorText"
-                    variant="secondary"
-                    showRightIcon
-                    href={TERMS_OF_USE_URL}
-                    target="_blank"
-                  >
-                    Terms of Use
-                  </Link>
-                </>
+                screenData?.blockDescription ? (
+                  <>
+                    {screenData.blockDescription} &nbsp; Learn more in our{' '}
+                    <Link
+                      textVariant="small"
+                      color="errorText"
+                      variant="secondary"
+                      showRightIcon
+                      href={TERMS_OF_USE_URL}
+                      target="_blank"
+                    >
+                      Terms of Use
+                    </Link>
+                  </>
+                ) : !screenData ? (
+                  'Something went wrong while verifying this transaction.'
+                ) : null
               }
             />
           ) : null}
@@ -82,7 +86,7 @@ const TransactionButton = withSuspense(
                   }
                 }}
                 ref={ref}
-                isDisabled={!isReady || screenData?.isBlocked || isDisabled}
+                isDisabled={!isReady || !screenData || screenData?.isBlocked || isDisabled}
               />
             </>
           ) : null}
@@ -107,7 +111,7 @@ const TransactionButton = withSuspense(
       )
     }
   ),
-  ({ transactionType, helperButton, sx, ...buttonProps }) => (
+  ({ transactionType, helperButton, onClick, sx, ...buttonProps }) => (
     <Box sx={sx}>
       <ButtonShimmer width="100%" {...buttonProps} />
     </Box>

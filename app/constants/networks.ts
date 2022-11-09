@@ -10,7 +10,7 @@ export enum EthereumChainId {
 
 export enum OptimismChainId {
   OptimismMainnet = 10,
-  OptimismKovan = 69,
+  OptimismGoerli = 420,
   Local = 31337, // Optimism
 }
 
@@ -73,20 +73,20 @@ export const NETWORK_CONFIGS: Record<ChainId, NetworkConfig> = {
     network: Network.Optimism,
     walletRpcUrl: 'https://mainnet.optimism.io',
     readRpcUrls: filterNulls([
-      `https://optimism-mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
-      ALCHEMY_PROJECT_ID ? `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_PROJECT_ID}` : null,
+      `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_PROJECT_ID}`,
+      ALCHEMY_PROJECT_ID ? `https://optimism-mainnet.infura.io/v3/${INFURA_PROJECT_ID}` : null,
     ]),
     blockExplorerUrl: 'https://optimistic.etherscan.io',
     iconUrls: ['https://optimism.io/images/metamask_icon.svg', 'https://optimism.io/images/metamask_icon.png'],
   },
-  [OptimismChainId.OptimismKovan]: {
-    name: 'Optimistic Ethereum (Kovan)',
-    shortName: 'Optimistic Kovan',
-    chainId: OptimismChainId.OptimismKovan,
+  [OptimismChainId.OptimismGoerli]: {
+    name: 'Optimistic Ethereum (Goerli)',
+    shortName: 'Optimistic Goerli',
+    chainId: OptimismChainId.OptimismGoerli,
     network: Network.Optimism,
-    walletRpcUrl: 'https://kovan.optimism.io',
-    readRpcUrls: ['https://kovan.optimism.io'],
-    blockExplorerUrl: 'https://kovan-explorer.optimism.io',
+    walletRpcUrl: 'https://goerli.optimism.io',
+    readRpcUrls: ['https://goerli.optimism.io', `https://optimism-goerli.infura.io/v3/${INFURA_PROJECT_ID}`],
+    blockExplorerUrl: 'https://goerli-optimism.etherscan.io/',
     iconUrls: ['https://optimism.io/images/metamask_icon.svg', 'https://optimism.io/images/metamask_icon.png'],
   },
   [EthereumChainId.Local]: {

@@ -748,6 +748,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ethersproject/providers@npm:5.7.2":
+  version: 5.7.2
+  resolution: "@ethersproject/providers@npm:5.7.2"
+  dependencies:
+    "@ethersproject/abstract-provider": ^5.7.0
+    "@ethersproject/abstract-signer": ^5.7.0
+    "@ethersproject/address": ^5.7.0
+    "@ethersproject/base64": ^5.7.0
+    "@ethersproject/basex": ^5.7.0
+    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/bytes": ^5.7.0
+    "@ethersproject/constants": ^5.7.0
+    "@ethersproject/hash": ^5.7.0
+    "@ethersproject/logger": ^5.7.0
+    "@ethersproject/networks": ^5.7.0
+    "@ethersproject/properties": ^5.7.0
+    "@ethersproject/random": ^5.7.0
+    "@ethersproject/rlp": ^5.7.0
+    "@ethersproject/sha2": ^5.7.0
+    "@ethersproject/strings": ^5.7.0
+    "@ethersproject/transactions": ^5.7.0
+    "@ethersproject/web": ^5.7.0
+    bech32: 1.1.4
+    ws: 7.4.6
+  checksum: 1754c731a5ca6782ae9677f4a9cd8b6246c4ef21a966c9a01b133750f3c578431ec43ec254e699969c4a0f87e84463ded50f96b415600aabd37d2056aee58c19
+  languageName: node
+  linkType: hard
+
 "@ethersproject/random@npm:5.7.0, @ethersproject/random@npm:^5.7.0":
   version: 5.7.0
   resolution: "@ethersproject/random@npm:5.7.0"
@@ -1630,7 +1658,7 @@ __metadata:
     "@next/bundle-analyzer": ^11.0.0
     "@rainbow-me/rainbowkit": 0.6.2
     "@sentry/nextjs": ^7.13.0
-    "@socket.tech/widget": ^0.1.4
+    "@socket.tech/plugin": ^1.0.0
     "@types/node": 17.0.40
     "@types/react": 18.0.1
     "@types/react-csv": ^1.1.3
@@ -1646,7 +1674,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-simple-import-sort: ^7.0.0
     eslint-plugin-unused-imports: ^2.0.0
-    ethers: ^5.6.8
+    ethers: ^5.7.2
     graphql: ^16.3.0
     graphql-tag: ^2.12.6
     next: 12.1.6
@@ -2409,27 +2437,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@socket.tech/socket-v2-sdk@npm:^1.20.0":
-  version: 1.20.0
-  resolution: "@socket.tech/socket-v2-sdk@npm:1.20.0"
-  dependencies:
-    "@socket.tech/ll-core": ^0.1.14
-    axios: ^0.27.2
-    ethers: ^5.6.5
-    form-data: ^4.0.0
-    tslib: ^2.4.0
-  checksum: 220d77a5b7c3ca9012ea45dcabb729f0996d33cb8938bee1913b795226243a052128478f15157bb309a5c571da9cbb36feb62c3b3f56245da3e83eaf268a1965
-  languageName: node
-  linkType: hard
-
-"@socket.tech/widget@npm:^0.1.4":
-  version: 0.1.4
-  resolution: "@socket.tech/widget@npm:0.1.4"
+"@socket.tech/plugin@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@socket.tech/plugin@npm:1.0.0"
   dependencies:
     "@react-spring/web": ^9.5.0
     "@reduxjs/toolkit": ^1.8.2
     "@socket.tech/ll-core": ^0.1.10
-    "@socket.tech/socket-v2-sdk": ^1.20.0
+    "@socket.tech/socket-v2-sdk": ^1.21.0
     ethers: ^5.6.9
     react-feather: ^2.0.10
     react-redux: ^8.0.2
@@ -2437,7 +2452,20 @@ __metadata:
   peerDependencies:
     react: ">=17.0.1"
     react-dom: ">=17.0.1"
-  checksum: 9eb90e94d8c7ac25ea4b9aac02a5054ffc43fe325fb617768937f6713d28dc7fac5a31915a9a3dd39856fd2f32fb6526ea758ff2239bdba8eac4d46b7c77f9a1
+  checksum: 9cbc2065b4442bb8489cabf16d1d97bed7a900ff19007f69fc7d95e3f5cc2d5451242bc116a8017b54650bf9b2180466b75670f3641857d9142dcf68b57057a0
+  languageName: node
+  linkType: hard
+
+"@socket.tech/socket-v2-sdk@npm:^1.21.0":
+  version: 1.21.0
+  resolution: "@socket.tech/socket-v2-sdk@npm:1.21.0"
+  dependencies:
+    "@socket.tech/ll-core": ^0.1.14
+    axios: ^0.27.2
+    ethers: ^5.6.5
+    form-data: ^4.0.0
+    tslib: ^2.4.0
+  checksum: f7d03c86ad6fe9158a1ebfc00376c377e7680d2151738b094e8d369e975675527afa33c7549de901039f0dcc2b1a2956f6c79c741c91f55cf955c5b13a490d0f
   languageName: node
   linkType: hard
 
@@ -5839,7 +5867,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^5.6.5, ethers@npm:^5.6.8, ethers@npm:^5.6.9":
+"ethers@npm:^5.6.5, ethers@npm:^5.6.9":
   version: 5.7.1
   resolution: "ethers@npm:5.7.1"
   dependencies:
@@ -5874,6 +5902,44 @@ __metadata:
     "@ethersproject/web": 5.7.1
     "@ethersproject/wordlists": 5.7.0
   checksum: 7a61b7a105c41f9fec327887414f1950dc27bfa2d12fe29a068419eaaa3d415e6a12275685c87f700abd88c3b639ae79c09a2f90edea1e69edc8126cb0dce708
+  languageName: node
+  linkType: hard
+
+"ethers@npm:^5.6.8, ethers@npm:^5.7.2":
+  version: 5.7.2
+  resolution: "ethers@npm:5.7.2"
+  dependencies:
+    "@ethersproject/abi": 5.7.0
+    "@ethersproject/abstract-provider": 5.7.0
+    "@ethersproject/abstract-signer": 5.7.0
+    "@ethersproject/address": 5.7.0
+    "@ethersproject/base64": 5.7.0
+    "@ethersproject/basex": 5.7.0
+    "@ethersproject/bignumber": 5.7.0
+    "@ethersproject/bytes": 5.7.0
+    "@ethersproject/constants": 5.7.0
+    "@ethersproject/contracts": 5.7.0
+    "@ethersproject/hash": 5.7.0
+    "@ethersproject/hdnode": 5.7.0
+    "@ethersproject/json-wallets": 5.7.0
+    "@ethersproject/keccak256": 5.7.0
+    "@ethersproject/logger": 5.7.0
+    "@ethersproject/networks": 5.7.1
+    "@ethersproject/pbkdf2": 5.7.0
+    "@ethersproject/properties": 5.7.0
+    "@ethersproject/providers": 5.7.2
+    "@ethersproject/random": 5.7.0
+    "@ethersproject/rlp": 5.7.0
+    "@ethersproject/sha2": 5.7.0
+    "@ethersproject/signing-key": 5.7.0
+    "@ethersproject/solidity": 5.7.0
+    "@ethersproject/strings": 5.7.0
+    "@ethersproject/transactions": 5.7.0
+    "@ethersproject/units": 5.7.0
+    "@ethersproject/wallet": 5.7.0
+    "@ethersproject/web": 5.7.1
+    "@ethersproject/wordlists": 5.7.0
+  checksum: b7c08cf3e257185a7946117dbbf764433b7ba0e77c27298dec6088b3bc871aff711462b0621930c56880ff0a7ceb8b1d3a361ffa259f93377b48e34107f62553
   languageName: node
   linkType: hard
 
